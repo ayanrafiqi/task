@@ -48,7 +48,7 @@ const TeacherComponent = () => {
 
   const addTeacher = async () => {
     try {
-      await createTeacher({ name, subjects });
+      createTeacher({ name, subjects });
       fetchTeachers();
       handleClose();
     } catch (error) {
@@ -58,7 +58,7 @@ const TeacherComponent = () => {
 
   const deleteTeacherHandler = async (id) => {
     try {
-      await deleteTeacher(id);
+      deleteTeacher(id);
       fetchTeachers();
     } catch (error) {
       console.error("Error deleting teacher:", error);
@@ -67,7 +67,7 @@ const TeacherComponent = () => {
 
   const updateTeacherHandler = async () => {
     try {
-      await updateTeacher(selectedTeacher._id, { name, subjects });
+      updateTeacher(selectedTeacher._id, { name, subjects });
       fetchTeachers();
       handleClose();
     } catch (error) {
