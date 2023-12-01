@@ -5,7 +5,7 @@ const {
   updateTeacher,
   getAllTeachers,
   getTeacher,
-} = require("../Controllers/TeacherController");
+} = require("../controllers/TeacherController");
 
 router.route("/").post(createTeacher).get(getAllTeachers);
 router.route("/:id").patch(updateTeacher).get(getTeacher);

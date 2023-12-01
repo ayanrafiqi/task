@@ -1,4 +1,4 @@
-const Marks = require("../models/MarksModel");
+const Marks = require("../models/marksModel");
 const asyncHandler = require("express-async-handler");
 
 // @desc Fetch all the Marks

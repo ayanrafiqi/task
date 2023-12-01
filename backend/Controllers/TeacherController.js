@@ -27,7 +27,7 @@ const getAllTeachers = asyncHandler(async (req, res) => {
 // @route GET api/Teachers/id
 // @access Public
 
-const getTeacherById = asyncHandler(async (req, res) => {
+const getTeacher = asyncHandler(async (req, res) => {
   const teacher = await Teacher.findById(req.params.id);
 
   if (teacher) {
@@ -88,7 +88,7 @@ const updateTeacher = asyncHandler(async (req, res) => {
 
 module.exports = {
   getAllTeachers,
-  getTeacherById,
+  getTeacher,
   createTeacher,
   deleteTeacher,
   updateTeacher,

@@ -1,11 +1,11 @@
 const express = require("express");
-const router = express.Router();
 const {
   createStudent,
   updateStudent,
   getAllStudents,
   getStudent,
-} = require("../Controllers/StudentController");
+} = require("../controllers/StudentController");
+const router = express.Router();
 
 router.route("/").post(createStudent).get(getAllStudents);
 router.route("/:id").patch(updateStudent).get(getStudent);
