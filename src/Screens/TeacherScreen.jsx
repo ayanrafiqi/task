@@ -5,6 +5,7 @@ import {
   getAllTeachers,
   deleteTeacher,
   updateTeacher,
+  getTeacher,
 } from "../Services/TeacherServices";
 
 const TeacherComponent = () => {
@@ -34,9 +35,8 @@ const TeacherComponent = () => {
 
   const fetchTeachers = async () => {
     try {
-      const data = await getAllTeachers(searchKeyword, page);
-      setTeachers(data.teachers);
-      setPages(data.pages);
+      getAllTeachers(searchKeyword, page, setTeachers);
+      setPages(teachers.pages);
     } catch (error) {
       console.error("Error fetching teachers:", error);
     }
@@ -45,6 +45,23 @@ const TeacherComponent = () => {
   useEffect(() => {
     fetchTeachers();
   }, [page, searchKeyword]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "name") {
+      setName(value);
+    } else if (name === "subjects") {
+      setSubjects(value);
+    }
+  };
+
+  const handleSubmit = () => {
+    if (selectedTeacher) {
+      updateTeacherHandler();
+    } else {
+      addTeacher();
+    }
+  };
 
   const addTeacher = async () => {
     try {
@@ -67,7 +84,7 @@ const TeacherComponent = () => {
 
   const updateTeacherHandler = async () => {
     try {
-      updateTeacher(selectedTeacher._id, { name, subjects });
+      await updateTeacher(selectedTeacher._id, { name, subjects });
       fetchTeachers();
       handleClose();
     } catch (error) {
@@ -107,8 +124,43 @@ const TeacherComponent = () => {
       </div>
       <div>
         <Modal show={showModal} onHide={handleClose}>
-          {/* Modal content for adding/updating teachers */}
-          {/* ...Form inputs and buttons for adding/updating */}
+          <Modal.Header closeButton>
+            <Modal.Title>
+              {selectedTeacher ? "Edit Teacher" : "Create Teacher"}
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form>
+              <Form.Group controlId="formName">
+                <Form.Label>Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter name"
+                  name="name"
+                  value={name}
+                  onChange={handleChange}
+                />
+              </Form.Group>
+              <Form.Group controlId="formSubjects">
+                <Form.Label>Subjects</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter subjects separated by commas"
+                  name="subjects"
+                  value={subjects}
+                  onChange={handleChange}
+                />
+              </Form.Group>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={handleSubmit}>
+              {selectedTeacher ? "Save Changes" : "Create"}
+            </Button>
+          </Modal.Footer>
         </Modal>
       </div>
       <div>

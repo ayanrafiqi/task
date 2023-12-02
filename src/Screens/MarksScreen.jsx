@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Table } from "react-bootstrap";
-import { getAllMarks } from "../Services/MarksServices"; // Import your Marks service functions
+import { getAllMarks } from "../Services/MarksServices";
 
 const MarksScreen = () => {
-  const [selectedStudents, setSelectedStudents] = useState([]); // To store selected students
-  const [marksData, setMarksData] = useState([]); // To store marks data for selected students
+  const [selectedStudents, setSelectedStudents] = useState([]);
+  const [marksData, setMarksData] = useState([]);
 
   const fetchMarks = async () => {
     // Fetch marks data when selected students change
@@ -58,7 +58,6 @@ const MarksScreen = () => {
   return (
     <div className="container">
       <h2>Marks Screen</h2>
-
       <div>
         <h3>Selected Students:</h3>
         <ul>
