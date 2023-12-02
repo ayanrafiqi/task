@@ -11,11 +11,10 @@ const marksSchema = mongoose.Schema({
     required: true,
     ref: "Teacher",
   },
-  name: { type: String, required: true },
-  class: { type: String, required: true },
-  subject: { type: String },
-  marks: { type: String },
-  date: { type: Date, default: Date.now() },
+  subject: { type: String, required: true },
+  totalMarks: { type: Number, required: true },
+  obtainedMarks: { type: Number, required: true },
+  examDate: { type: Date, default: Date.now() },
 });
 
 module.exports = mongoose.model("Marks", marksSchema);
