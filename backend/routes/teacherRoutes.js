@@ -5,9 +5,10 @@ const {
   updateTeacher,
   getAllTeachers,
   getTeacher,
+  deleteTeacher,
 } = require("../controllers/TeacherController");
 
 router.route("/").post(createTeacher).get(getAllTeachers);
-router.route("/:id").patch(updateTeacher).get(getTeacher);
+router.route("/:id").patch(updateTeacher).get(getTeacher).delete(deleteTeacher);
 
 module.exports = router;

@@ -18,6 +18,8 @@ const getAllMarks = asyncHandler(async (req, res) => {
 
   const count = await Marks.countDocuments({ ...keyword });
   const marks = await Marks.find({ ...keyword })
+    .populate("teacher", "name")
+    .populate("student", "name")
     .limit(pageSize)
     .skip(pageSize * (page - 1)); //receives a number as a parameter and allows the user to specify the number of documents to skip.
   res.json({ marks, page, pages: Math.ceil(count / pageSize) });
@@ -87,7 +89,9 @@ const updateMarks = asyncHandler(async (req, res) => {
 // @access Public
 
 const getMarks = asyncHandler(async (req, res) => {
-  const marks = await Marks.findById(req.params.id);
+  const marks = await Marks.findById(req.params.id)
+    .populate("teacher", "name")
+    .populate("student", "name");
 
   if (marks) {
     res.json(marks);
