@@ -24,7 +24,7 @@ const getAllMarks = asyncHandler(async (req, res) => {
 });
 
 // @desc create new Marks
-// @route POST api/Markss
+// @route POST api/Marks
 // @access Private/Admin only
 
 const createMarks = asyncHandler(async (req, res) => {
@@ -59,7 +59,7 @@ const deleteMarks = asyncHandler(async (req, res) => {
 });
 
 // @desc edit one specific Marks
-// @route PUT api/Markss/id
+// @route PUT api/Marks/id
 // @access Private/Admin only
 
 const updateMarks = asyncHandler(async (req, res) => {
