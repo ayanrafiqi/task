@@ -166,7 +166,14 @@ const TeacherComponent = () => {
       <div>
         <h3>Teacher List</h3>
         <Table striped bordered hover>
-          {/* Table headers */}
+          <thead>
+            <tr>
+              <th>Teacher Id</th>
+              <th> Teacher Name </th>
+              <th>Subject Assigned</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
           <tbody>
             {teachers.map((teacher) => (
               <tr key={teacher._id}>

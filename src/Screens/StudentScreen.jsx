@@ -160,7 +160,14 @@ const StudentComponent = () => {
       <div>
         <h3>Student List</h3>
         <Table striped bordered hover>
-          {/* Table headers */}
+          <thead>
+            <tr>
+              <th>Student Id</th>
+              <th> Student Name</th>
+              <th>Class</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
           <tbody>
             {students.map((student) => (
               <tr key={student._id}>

@@ -1,76 +1,82 @@
-import React, { useState, useEffect } from "react";
-import { Table } from "react-bootstrap";
-import { getAllMarks } from "../Services/MarksServices";
+import React, { useEffect, useState } from "react";
+import {
+  deleteMarks,
+  getAllMarks,
+  updateMarks,
+} from "../Services/MarksServices";
+import { Table, Button } from "react-bootstrap";
 
 const MarksScreen = () => {
-  const [selectedStudents, setSelectedStudents] = useState([]);
-  const [marksData, setMarksData] = useState([]);
-
-  const fetchMarks = async () => {
-    // Fetch marks data when selected students change
-    const studentIds = selectedStudents.map((student) => student.id).join(",");
-    try {
-      const marks = await getAllMarks(studentIds); // Fetch marks data for selected students
-      setMarksData(marks); // Set marks data to state
-    } catch (error) {
-      console.error("Error fetching marks:", error);
-    }
-  };
+  const [marks, setMarks] = useState();
 
   useEffect(() => {
-    fetchMarks(); // Fetch marks data when selected students change
-  }, [selectedStudents]);
+    const getMarks = (cb) => {
+      getAllMarks(cb);
+    };
 
-  // Render function to display marks data
-  const renderMarksData = () => {
-    if (marksData.length === 0) {
-      return <p>No marks data available.</p>;
-    }
+    getMarks(setMarks);
+  }, [marks]);
 
-    return (
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Student ID</th>
-            <th>Name</th>
-            <th>Class</th>
-            <th>Teacher</th>
-            <th>Subject</th>
-            <th>Marks</th>
-          </tr>
-        </thead>
-        <tbody>
-          {marksData.map((mark) => (
-            <tr key={mark.id}>
-              <td>{mark.studentId}</td>
-              <td>{mark.name}</td>
-              <td>{mark.std}</td>
-              <td>{mark.teacher}</td>
-              <td>{mark.subject}</td>
-              <td>{mark.marks}</td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-    );
+  const marksHandler = (e) => {
+    e.preventDefault();
+    // will display modal for creating marks
+  };
+  const editHandler = (e, id) => {
+    e.preventDefault();
+
+    // will display modal for editing marks
   };
 
   return (
-    <div className="container">
-      <h2>Marks Screen</h2>
-      <div>
-        <h3>Selected Students:</h3>
-        <ul>
-          {selectedStudents.map((student) => (
-            <li key={student.id}>{student.name}</li>
-          ))}
-        </ul>
-      </div>
-
-      <div>
-        <h3>Marks Details:</h3>
-        {renderMarksData()}
-      </div>
+    <div>
+      MarksScreen
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>Student Name</th>
+            <th>Teacher Name</th>
+            <th>Subject</th>
+            <th>Total Marks</th>
+            <th> Obtained Marks</th>
+            <th>Exam Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {!marks ? (
+            <h1>Marks Sheet is Empty</h1>
+          ) : (
+            <>
+              {marks.map((x) => (
+                <tr key={x._id}>
+                  <td> {x.student.name}</td>
+                  <td>{x.teacher.name}</td>
+                  <td>{x.subject}</td>
+                  <td>{x.totalMarks}</td>
+                  <td>{x.obtainedMarks}</td>
+                  <td>{x.examDate}</td>
+                  <td>
+                    <Button
+                      type="submit"
+                      onClick={() => {
+                        deleteMarks(x._id);
+                      }}
+                    >
+                      Delete Marks
+                    </Button>
+                    <Button type="submit" onClick={() => editHandler(x.id)}>
+                      Edit Marks
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </>
+          )}
+        </tbody>
+      </Table>
+      <Button type="submit" onClick={marksHandler}>
+        Create Marks
+      </Button>
     </div>
   );
 };
